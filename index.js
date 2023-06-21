@@ -49,17 +49,16 @@ const createWindow = () => {
     // 系统托盘设置（通知栏菜单）
     let tray = new Tray(path.join(__dirname, 'favicon.ico'));
     tray.setToolTip('CS APP');
-    let contextMenu = Menu.buildFromTemplate([
-        {
-            label: 'Exit',
-            click: () => { win.destroy(); }
-        }
-    ])
+    let contextMenu = Menu.buildFromTemplate([{
+        label: 'Exit', click: () => { win.destroy(); }
+    }]);
     tray.setContextMenu(contextMenu);
     tray.on('click', () => {
         win.isVisible() ? win.hide() : win.show();
         win.setSkipTaskbar(win.isVisible() ? false : true);
-    })
+    });
+
+    portIsOccupied(config.port);
 };
 
 // 这段程序将会在 Electron 结束初始化
@@ -69,14 +68,14 @@ app.whenReady().then(() => {
     // cp.spawn('cmd.exe', ['D:/webServer/start.bat']);
 
     // 定义路径（其它服务指定路径）
-    // const filePath = 'D:/webServer/start.bat';
-    // const nodePath = 'C:/Program Files/nodejs/node.exe';
-    // const indexPath = 'D:/webServer/index.js';
+    const filePath = 'D:/webServer/start.bat';
+    const nodePath = 'C:/Program Files/nodejs/node.exe';
+    const indexPath = 'D:/webServer/index.js';
     
     // 将服务放置到electron包中
-    const filePath = __dirname + '/webServer/start.bat';
-    const nodePath = 'node';
-    const indexPath = __dirname + '/webServer/index.js';
+    // const filePath = __dirname + '/webServer/start.bat';
+    // const nodePath = 'node';
+    // const indexPath = __dirname + '/webServer/index.js';
     
     cp.execFile(filePath, [nodePath, indexPath], null, function(error, stdout, stderr){
         if (error !==null) {

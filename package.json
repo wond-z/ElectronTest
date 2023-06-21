@@ -1,17 +1,29 @@
 {
-  "name": "cs_app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron .",
-    "build-64": "electron-builder --win --64"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "electron": "^25.1.1"
-  }
+    "name": "fody",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "electron .",
+        "build-64": "electron-builder --win --64",
+        "build": "electron-builder"
+    },
+    "build": {
+        "productName": "CSApp",
+        "appId": "com.app.Wondz",
+        "directories": {
+            "output": "dist"
+        },
+        "win": {
+            "icon": "favicon.ico"
+        }
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^25.1.1",
+        "electron-builder": "^24.4.0"
+    }
 }
