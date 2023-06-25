@@ -48,11 +48,14 @@ const createWindow = () => {
 
     // 系统托盘设置（通知栏菜单）
     let tray = new Tray(path.join(__dirname, 'favicon.ico'));
+    // 鼠标浮动提示
     tray.setToolTip('CS APP');
+    // 右键菜单
     let contextMenu = Menu.buildFromTemplate([{
         label: 'Exit', click: () => { win.destroy(); }
     }]);
     tray.setContextMenu(contextMenu);
+    // 托盘点击事件
     tray.on('click', () => {
         win.isVisible() ? win.hide() : win.show();
         win.setSkipTaskbar(win.isVisible() ? false : true);
@@ -77,7 +80,8 @@ app.whenReady().then(() => {
     // const nodePath = 'node';
     // const indexPath = __dirname + '/webServer/index.js';
     
-    cp.execFile(filePath, [nodePath, indexPath], null, function(error, stdout, stderr){
+    // 拉起其它服务
+    cp.execFile(filePath, [nodePath, indexPath], null, function(error, stdout, stderr) {
         if (error !==null) {
             console.log("exec error" + error);
         } else console.log("成功");
@@ -85,6 +89,7 @@ app.whenReady().then(() => {
         // console.log('stderr: ' + stderr);
     });
 
+    // 打开主窗口（延时3秒的目的为等服务启动）
     setTimeout(function() {
         createWindow();
     }, 3000);
@@ -104,7 +109,7 @@ app.on("window-all-closed", () => {
         const netCommand = 'netstat -ano|findstr ' + config.port;
         cp.exec(netCommand, { maxBuffer: 5000 * 1024}, function(err, stdout, stderr) {
             if (err) {
-                console.log(err)
+                console.log(err);
             } else {
                 try {
                     let osMsgArrTemp = stdout.split(' ');
@@ -116,7 +121,7 @@ app.on("window-all-closed", () => {
                         process.kill(`${pid}`) && app.quit();
                     }
                 } catch (error) {
-                    console.log(error)
+                    console.log(error);
                 }
             }
         });
